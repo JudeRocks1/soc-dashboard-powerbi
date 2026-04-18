@@ -15,6 +15,7 @@ RESOURCE_FAIL_CHANCE = { # The chance that a simulated login attempt will fail w
     'Database': 0.11,
     'FileServer': 0.12
 }
+USER_BRUTE_FORCE_ATTACK_CHANCE = 0.3 # The chance each day that a random user will have brute force failed logins
 
 # Organization specific classifications
 DEPARTMENTS = ['IT', 'HR', 'Finance', 'Sales']
@@ -69,6 +70,25 @@ def fill_login_list(user_list):
     # simulation loop
     for day_num in range(DAYS_OF_DATA): # iterates through the days
         current_date = start_date + timedelta(days=day_num) # tracks the current day
+
+        attack_today = random.random() < USER_BRUTE_FORCE_ATTACK_CHANCE # does an attack happen today
+        if attack_today:
+            victim = random.choice(user_list) # who is the victim
+            attack_hour = random.randint(0, 23)
+            attack_minute = random.randint(0, 59)
+            print(f"Brute force attack on {victim} on {current_date.date()} at {attack_hour:02d}:{attack_minute:02d}")
+
+            num_attack_logins = random.randint(30, 60) # generate the attack log
+            for k in range(num_attack_logins):
+                attack_time = current_date.replace(hour=attack_hour, minute=random.randint(0, 59))
+                login_list.append({
+                        'Timestamp': attack_time,
+                        'UserID': victim,
+                        'Status': 'Failed',
+                        'Resource': random.choice(RESOURCES),
+                        'Department': user_details[victim]['Department'],
+                        'Role': user_details[victim]['Role']
+                })
 
         for user in user_list: # iterates through users
             num_logins = random.randint(0,20)

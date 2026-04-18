@@ -1,6 +1,13 @@
 # Security Operations & Access Monitoring Dashboard
 
-So far this is a python script that simulates login events, will update this section of the README once the csv is applied.
+The Problem: Security Operations Center (SOC) analysts need practice identifying threats like brute force attacks and resource compromises without risking real data.
+
+The Solution: A simulated security dashboard with Python-generated attack patterns and Power BI visualizations.
+
+The Tech Stack: Python (Log Generation), Power BI (Visualization), DAX (Security Logic), Power Query (Parameterized ETL).
+
+Note: Interactive web link is for visualization demo only. RLS is disabled for public web publishing, install and configure below based on the Power Bi .pbix file and Python script.
+
 
 ## Installation
 
@@ -8,17 +15,17 @@ So far this is a python script that simulates login events, will update this sec
 git clone https://github.com/yourusername/soc-dashboard-powerbi.git
 cd soc-dashboard-powerbi
 python -m venv .venv
+# Windows:
+.\venv\Scripts\activate
+# macOS/Linux:
 source .venv/bin/activate
-pip install pandas
+pip install -r requirements.txt
 ```
 
-## Usage
+## Configuration
 
-# Python
+### Python
 
-```bash
-python generate_logs.py
-```
 The following global variables in the python script modify the output of the simulated security logs.
 ```python
 #----------Customizable values----------
@@ -31,6 +38,7 @@ RESOURCE_FAIL_CHANCE = { # The chance that a simulated login attempt will fail w
     'Database': 0.11,
     'FileServer': 0.12
 }
+USER_BRUTE_FORCE_ATTACK_CHANCE = 0.3 # The chance each day that a random user will have brute force failed logins
 
 # Organization specific classifications
 DEPARTMENTS = ['IT', 'HR', 'Finance', 'Sales']
@@ -40,9 +48,14 @@ RESOURCES = ['Email', 'VPN', 'Database', 'FileServer']
 #----------End of customizable values----------
 ```
 
-# Power BI
+#### OUTPUT_FILE Name Complications
+IGNORE THIS SECTION IF YOU DO NOT PLAN TO CHANGE THE OUTPUT FILE NAME.
+There are 2 Power Bi elements that depend on the csv name, and it is NOT RECOMMENDED TO CHANGE.
+```python
+OUTPUT_FILE = "security_logs.csv" # KEEP .csv
+```
 
-The following dax script will break or need to be modified if the name of the csv file is changed.
+The following dax script depends on the csv file name. (Model view -> Data -> Model -> Semantic model -> Measures -> Top 20% Failed Users)
 
 ```dax
 Top 20% Failed Users = 
@@ -69,6 +82,40 @@ RETURN
 IF(CurrentUserFails >= Threshold, 1, 0)
 ```
 
-To avoid naming conflict issues only modify the Customizable values in Python and use the following steps to visualize a new csv file:
-- TODO
+The SrcFolder also depends on the file name. Follow the steps found below in Power Bi File Path but modify security_logs.csv to the new name.
 
+### Power BI
+
+#### File Path
+
+You must configure the location of the csv file on your machine. Go to Power Query editor -> Queries -> SrcFolder. Change the Current Value to the location of the script on your hard drive followed by the csv name. C:LOCATION_OF_PYTHON_SCRIPT\security_logs.csv
+
+## Usage
+
+### Python
+```bash
+python generate_logs.py
+```
+Expected output:
+```bash
+Saved 3368 rows of data to security_logs.csv
+```
+Errors will be given in the format "Type of Exception: ERROR_TYPE"
+
+#### RLS Roles
+
+In a real-world dashboard, users would be signed in with their company accociated emails and have restricted access to information. Row level security (RLS) is implemented in this project based on the following demo usernames and roles.
+
+```
+| Username | Role | User ID |
+| --- | --- | --- |
+soc_analyst@demo.com | SOC Analyst | All
+it_manager@demo.com | Department Manager | All
+hr_manager@demo.com | Department Manager | All
+julian@demo.com | Standard User | U0001
+bob@demo.com | Standard User | U0002
+```
+
+- Click on the "View as" feature. (Report View -> View as)
+- Select Other user and input a given Username and select its approriate role.
+- This will only display information at their access level.
