@@ -90,6 +90,7 @@ You must configure the location of the CSV file on your machine. Go to Power Que
 ## Usage
 
 ### Python
+Enter the soc-dashboard-powerbi folder and run
 ```bash
 python generate_logs.py
 ```
@@ -97,13 +98,19 @@ Expected output:
 ```bash
 Saved 3368 rows of data to security_logs.csv
 ```
+When random brute force attacks occur:
+```bash
+Brute force attack on U0011 on 2026-04-13 at 19:38
+Brute force attack on U0036 on 2026-04-17 at 05:58
+Saved 3665 rows of data to security_logs.csv
+```
+
 Errors will be given in the format "Type of Exception: ERROR_TYPE"
 
 #### RLS Roles
 
 In a real-world dashboard, users would be signed in with their company-accociated emails and have restricted access to information. Row-level security (RLS) is implemented in this project based on the following demo usernames and roles.
 
-```
 | Username | Role | User ID |
 | --- | --- | --- |
 soc_analyst@demo.com | SOC Analyst | All
@@ -111,7 +118,6 @@ it_manager@demo.com | Department Manager | All
 hr_manager@demo.com | Department Manager | All
 julian@demo.com | Standard User | U0001
 bob@demo.com | Standard User | U0002
-```
 
 - Click on the "View as" feature. (Report View -> View as)
 - Select Other user and input a given Username and select its appropriate role.
