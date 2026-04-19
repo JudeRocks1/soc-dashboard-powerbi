@@ -6,9 +6,6 @@ The Solution: A simulated security dashboard with Python-generated attack patter
 
 The Tech Stack: Python (Log Generation), Power BI (Visualization), DAX (Security Logic), Power Query (Parameterized ETL).
 
-Note: Interactive web link is for visualization demo only. RLS is disabled for public web publishing, install and configure below based on the Power Bi .pbix file and Python script.
-
-
 ## Installation
 
 ```bash
@@ -26,7 +23,7 @@ pip install -r requirements.txt
 
 ### Python
 
-The following global variables in the python script modify the output of the simulated security logs.
+The following global variables in the Python script modify the output of the simulated security logs.
 ```python
 #----------Customizable values----------
 
@@ -50,12 +47,12 @@ RESOURCES = ['Email', 'VPN', 'Database', 'FileServer']
 
 #### OUTPUT_FILE Name Complications
 IGNORE THIS SECTION IF YOU DO NOT PLAN TO CHANGE THE OUTPUT FILE NAME.
-There are 2 Power Bi elements that depend on the csv name, and it is NOT RECOMMENDED TO CHANGE.
+2 Power BI elements depend on the CSV name. CHANGING IS NOT RECOMMENDED.
 ```python
 OUTPUT_FILE = "security_logs.csv" # KEEP .csv
 ```
 
-The following dax script depends on the csv file name. (Model view -> Data -> Model -> Semantic model -> Measures -> Top 20% Failed Users)
+The following DAX script depends on the CSV file name. (Model view -> Data -> Model -> Semantic model -> Measures -> Top 20% Failed Users)
 
 ```dax
 Top 20% Failed Users = 
@@ -82,13 +79,13 @@ RETURN
 IF(CurrentUserFails >= Threshold, 1, 0)
 ```
 
-The SrcFolder also depends on the file name. Follow the steps found below in Power Bi File Path but modify security_logs.csv to the new name.
+The SrcFolder also depends on the file name. Follow the steps found below in the Power BI File Path, but modify security_logs.csv to the new name.
 
 ### Power BI
 
 #### File Path
 
-You must configure the location of the csv file on your machine. Go to Power Query editor -> Queries -> SrcFolder. Change the Current Value to the location of the script on your hard drive followed by the csv name. C:LOCATION_OF_PYTHON_SCRIPT\security_logs.csv
+You must configure the location of the CSV file on your machine. Go to Power Query editor -> Queries -> SrcFolder. Change the Current Value to the location of the script on your hard drive, followed by the CSV name. C:LOCATION_OF_PYTHON_SCRIPT\security_logs.csv
 
 ## Usage
 
@@ -104,7 +101,7 @@ Errors will be given in the format "Type of Exception: ERROR_TYPE"
 
 #### RLS Roles
 
-In a real-world dashboard, users would be signed in with their company accociated emails and have restricted access to information. Row level security (RLS) is implemented in this project based on the following demo usernames and roles.
+In a real-world dashboard, users would be signed in with their company-accociated emails and have restricted access to information. Row-level security (RLS) is implemented in this project based on the following demo usernames and roles.
 
 ```
 | Username | Role | User ID |
@@ -117,5 +114,5 @@ bob@demo.com | Standard User | U0002
 ```
 
 - Click on the "View as" feature. (Report View -> View as)
-- Select Other user and input a given Username and select its approriate role.
+- Select Other user and input a given Username and select its appropriate role.
 - This will only display information at their access level.
