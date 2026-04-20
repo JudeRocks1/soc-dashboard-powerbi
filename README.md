@@ -9,13 +9,21 @@ The Tech Stack: Python (Log Generation), Power BI (Visualization), DAX (Security
 ## Installation
 
 ```bash
+# Clone
 git clone https://github.com/JudeRocks1/soc-dashboard-powerbi.git
 cd soc-dashboard-powerbi
+
+# Create virtual environment
 python -m venv .venv
-# Windows:
-.\venv\Scripts\activate
+
+# Windows (Command Prompt):
+.\venv\Scripts\activate.bat
+# Windows (PowerShell):
+.\.venv\Scripts\Activate.ps1
 # macOS/Linux:
 source .venv/bin/activate
+
+#Install Dependencies
 pip install -r requirements.txt
 ```
 
