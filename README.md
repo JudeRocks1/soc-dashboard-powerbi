@@ -9,7 +9,7 @@ The Tech Stack: Python (Log Generation), Power BI (Visualization), DAX (Security
 ## Installation
 
 ```bash
-git clone https://github.com/yourusername/soc-dashboard-powerbi.git
+git clone https://github.com/JudeRocks1/soc-dashboard-powerbi.git
 cd soc-dashboard-powerbi
 python -m venv .venv
 # Windows:
