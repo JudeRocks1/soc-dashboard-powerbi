@@ -112,11 +112,13 @@ Errors will be given in the format "Type of Exception: ERROR_TYPE"
 ### Power BI
 
 ![Visual to aid written instructions failed to load](media/powerBIBrowse1.png)
+
 Start Power BI, click 'Open' then 'Browse this device' and find the .pbix file cloned from this repository.
 
 #### File Path
 
 ![Visual to aid written instructions failed to load](media/powerBICSV2.png)
+
 You must configure the location of the CSV file on your machine.
 - Go to Power Query editor -> Queries -> SrcFolder.
 - Change the Current Value to the location of the script on your hard drive, followed by the CSV name. -> C:LOCATION_OF_PYTHON_SCRIPT\security_logs.csv
