@@ -89,12 +89,6 @@ IF(CurrentUserFails >= Threshold, 1, 0)
 
 The SrcFolder also depends on the file name. Follow the steps found below in the Power BI File Path, but modify security_logs.csv to the new name.
 
-### Power BI
-
-#### File Path
-
-You must configure the location of the CSV file on your machine. Go to Power Query editor -> Queries -> SrcFolder. Change the Current Value to the location of the script on your hard drive, followed by the CSV name. C:LOCATION_OF_PYTHON_SCRIPT\security_logs.csv
-
 ## Usage
 
 ### Python
@@ -115,6 +109,19 @@ Saved 3665 rows of data to security_logs.csv
 
 Errors will be given in the format "Type of Exception: ERROR_TYPE"
 
+### Power BI
+
+![Visual to aid written instructions failed to load](media/powerBIBrowse1.png)
+Start Power BI, click 'Open' then 'Browse this device' and find the .pbix file cloned from this repository.
+
+#### File Path
+
+![Visual to aid written instructions failed to load](media/powerBICSV2.png)
+You must configure the location of the CSV file on your machine.
+- Go to Power Query editor -> Queries -> SrcFolder.
+- Change the Current Value to the location of the script on your hard drive, followed by the CSV name. -> C:LOCATION_OF_PYTHON_SCRIPT\security_logs.csv
+- Select Close & Apply at the top left of the Power Query editor.
+
 #### RLS Roles
 
 In a real-world dashboard, users would be signed in with their company-accociated emails and have restricted access to information. Row-level security (RLS) is implemented in this project based on the following demo usernames and roles.
@@ -127,6 +134,12 @@ hr_manager@demo.com | Department Manager | All
 julian@demo.com | Standard User | U0001
 bob@demo.com | Standard User | U0002
 
-- Click on the "View as" feature. (Report View -> View as)
+![Visual to aid written instructions failed to load](media/PowerBIView3.png)
+![Visual to aid written instructions failed to load](media/PowerBIRoles4.png)
+
+- Click on the "View as" feature. (Report View -> Modeling -> View as)
 - Select Other user and input a given Username and select its appropriate role.
 - This will only display information at their access level.
+
+![Visual to aid written instructions failed to load](media/PowerBIHR5.png)
+
